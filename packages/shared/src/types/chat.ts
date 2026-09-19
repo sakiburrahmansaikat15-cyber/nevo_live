@@ -1,0 +1,27 @@
+export interface IChat {
+  _id: string;
+  participants: Array<string | { _id: string; uid: string; nickname: string; avatar?: string; level?: number }>;
+  lastMessage: string;
+  lastMessageAt?: Date;
+  lastMessageBy?: string | { _id: string; uid: string; nickname: string };
+  unread?: number;
+  other?: { _id: string; uid: string; nickname: string; avatar?: string; level?: number };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IChatMessage {
+  _id: string;
+  chatId: string;
+  senderId: string;
+  message: string;
+  kind?: 'text' | 'gift' | 'voice';
+  giftId?: string;
+  giftName?: string;
+  giftCount?: number;
+  voiceUrl?: string;
+  voiceDuration?: number;
+  read: boolean;
+  readAt?: Date;
+  createdAt: Date;
+}

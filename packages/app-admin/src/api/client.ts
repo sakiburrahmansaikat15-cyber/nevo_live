@@ -1,0 +1,30 @@
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "https://nevo-live.onrender.com/api",
+  headers: { "Content-Type": "application/json" },
+});
+
+client.interceptors.request.use((config) => {
+  const stored = localStorage.getItem("admin-auth");
+  if (stored) {
+    try {
+      const { state } = JSON.parse(stored);
+      if (state?.token) config.headers.Authorization = `Bearer ${state.token}`;
+    } catch {}
+  }
+  return config;
+});
+
+client.interceptors.response.use(
+  (r) => r,
+  (err) => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem("admin-auth");
+      window.location.href = "/login";
+    }
+    return Promise.reject(err);
+  },
+);
+
+export default client;

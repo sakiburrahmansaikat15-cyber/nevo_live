@@ -1,0 +1,39 @@
+import { Router } from 'express';
+import { agentController } from '../controllers/agent.controller';
+import { authenticate } from '../middleware/auth';
+import { requireAgent, requireVerified } from '../middleware/roleGuard';
+
+const router = Router();
+
+// All agent routes require agent role + account verification (agency features)
+router.use(authenticate, requireAgent, requireVerified);
+
+// Dashboard summary
+router.get('/dashboard', agentController.getDashboard);
+
+// Recharge requests from users (Host/User → Agent)
+router.get('/recharge-requests', agentController.getRechargeRequests);
+router.put('/recharge-requests/:id/approve', agentController.approveRecharge);
+router.put('/recharge-requests/:id/reject', agentController.rejectRecharge);
+
+// Withdrawal requests (Host/User → Agent)
+router.get('/withdrawal-requests', agentController.getWithdrawalRequests);
+router.put('/withdrawal-requests/:id/approve', agentController.approveWithdrawal);
+router.put('/withdrawal-requests/:id/reject', agentController.rejectWithdrawal);
+router.put('/withdrawal-requests/:id/paid', agentController.markWithdrawalPaid);
+
+// Agent buys diamonds/coins from admin
+router.post('/orders', agentController.createOrder);
+router.get('/orders', agentController.getMyOrders);
+
+// Customers (hosts + linked users)
+router.get('/customers', agentController.getCustomers);
+
+// Wallet / earnings summary
+router.get('/wallet', agentController.getWallet);
+
+// Payment info (where users pay the agent)
+router.get('/payment-info', agentController.getPaymentInfo);
+router.put('/payment-info', agentController.updatePaymentInfo);
+
+export default router;
