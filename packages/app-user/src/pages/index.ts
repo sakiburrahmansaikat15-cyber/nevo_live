@@ -54,3 +54,5 @@ export { WatchHistory } from './WatchHistory';
 export { GamesHub } from './GamesHub';
 export { LuckySpin } from './LuckySpin';
 export { ActivityCenter } from './ActivityCenter';
+export { MyAgency } from './MyAgency';
+export { AgentProfileMock } from './AgentProfileMock';

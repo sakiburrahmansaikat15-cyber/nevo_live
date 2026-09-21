@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PiCheckBold as Check, PiCaretRightBold as ChevronRight, PiCoinsFill as Coins, PiCopyFill as Copy, PiCrownFill as Crown, PiGameControllerFill as Gamepad2, PiGiftFill as Gift, PiHeadphonesFill as Headphones, PiHeartFill as Heart, PiSquaresFourFill as LayoutGrid, PiSignOutBold as LogOut, PiMedalFill as Medal, PiRadioFill as Radio, PiPaperPlaneRightFill as Send, PiGearFill as SettingsIcon, PiShareNetworkFill as Share2, PiShieldCheckFill as ShieldCheck, PiStorefrontFill as Store, PiTrophyFill as Trophy, PiUserGearFill as UserCog, PiUserPlusFill as UserPlus, PiUsersFill as Users, PiWalletFill as WalletIcon } from 'react-icons/pi';
-import { PiTelevision, PiLightbulb, PiPlanet, PiClock, PiBackpack, PiSealCheck, PiYoutubeLogoFill, PiFacebookLogoFill, PiTiktokLogoFill } from 'react-icons/pi';
+import { PiTelevision, PiLightbulb, PiPlanet, PiClock, PiBackpack, PiSealCheck, PiYoutubeLogoFill, PiFacebookLogoFill, PiTiktokLogoFill, PiUsersFill } from 'react-icons/pi';
 import { useAuthStore } from '../stores';
 import { Avatar, EditProfileSheet, ProfileStatsRow, UserNameplate } from '../components/user';
 import { DiamondIcon, CoinIcon } from '../components/ui/CurrencyIcon';
@@ -157,20 +157,44 @@ export const Profile = () => {
         </button>
 
         {/* Requirement #3C — level tier progress */}
-        <div className="mt-4 bg-white/70 rounded-card p-3">
-          <div className="flex items-center justify-between mb-2">
-            <span className={`text-xs font-bold ${tier.text}`}>
-              {tier.label} · Lv.{user.level}
-            </span>
-            <span className="text-[11px] text-ink-muted">
-              {nextAt ? `Next tier at Lv.${nextAt}` : 'Top tier reached'}
-            </span>
+        <div className="mt-4 bg-white/70 rounded-card p-3 space-y-3">
+          {/* Main User Level */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className={`text-xs font-bold ${tier.text}`}>
+                {tier.label} · Lv.{user.level}
+              </span>
+              <span className="text-[11px] text-ink-muted">
+                {nextAt ? `Next tier at Lv.${nextAt}` : 'Top tier reached'}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-line overflow-hidden">
+              <div
+                className={`h-full rounded-full ${tier.pill}`}
+                style={{ width: `${Math.round(progress * 100)}%` }}
+              />
+            </div>
           </div>
-          <div className="h-1.5 rounded-full bg-line overflow-hidden">
-            <div
-              className={`h-full rounded-full ${tier.pill}`}
-              style={{ width: `${Math.round(progress * 100)}%` }}
-            />
+          
+          {/* Game/Stream Level */}
+          <div className="pt-2 border-t border-line/50">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=game&backgroundColor=FF6B6B" alt="Level Icon" className="w-4 h-4 rounded-full" />
+                <span className="text-xs font-bold text-[#FF6B6B]">
+                  Creator · Lv.{Math.floor(user.level / 2) || 1}
+                </span>
+              </div>
+              <span className="text-[11px] text-ink-muted">
+                Next tier at Lv.{(Math.floor(user.level / 2) || 1) + 1}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-line overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53]"
+                style={{ width: '45%' }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -333,6 +357,11 @@ export const Profile = () => {
           label="Bag"
           rightNode={<div className="w-1.5 h-1.5 rounded-full bg-status-danger mr-1" />}
           onClick={() => {}}
+        />
+        <MenuRow
+          icon={<PiUsersFill className="w-5 h-5 text-indigo-500" />}
+          label="My Agency"
+          onClick={() => navigate('/my-agency')}
         />
         <MenuRow
           icon={<PiSealCheck className="w-5 h-5" />}

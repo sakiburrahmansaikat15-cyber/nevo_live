@@ -319,7 +319,51 @@ export const AgentDashboard = () => {
                     <ChevronRight className="w-5 h-5 text-ink-ghost" />
                   </button>
                 ))}
+                {/* Mock Quit Requests Row */}
+                <button className="list-row w-full">
+                  <span className="flex-1 text-left">Quit Requests</span>
+                  {localStorage.getItem('agencyQuitStatus') === 'pending' && (
+                    <span className="min-w-[20px] h-5 px-1.5 rounded-full bg-red-500 text-white text-[11px] font-bold flex items-center justify-center">
+                      1
+                    </span>
+                  )}
+                  <ChevronRight className="w-5 h-5 text-ink-ghost" />
+                </button>
               </div>
+
+              {/* Quit Requests UI Mock */}
+              {localStorage.getItem('agencyQuitStatus') === 'pending' && (
+                <SectionCard title="Quit Requests" flush>
+                  <div className="divide-y divide-line">
+                    <div className="flex items-center gap-3 px-4 py-3">
+                      <Avatar src={user?.avatar} nickname={user?.nickname} size="md" />
+                      <div className="flex-1 min-w-0">
+                        <UserNameplate user={user as any} size="sm" showRoles={false} wrap />
+                        <p className="text-[11px] text-ink-muted">Requested to quit agency</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          localStorage.setItem('agencyQuitStatus', 'none');
+                          window.location.reload();
+                        }}
+                        className="h-8 px-3 rounded-full bg-surface-sunken text-ink-muted text-xs font-semibold"
+                      >
+                        Reject
+                      </button>
+                      <button
+                        onClick={() => {
+                          localStorage.setItem('agencyQuitStatus', 'none');
+                          localStorage.setItem('hasSeenAgencyPopup', 'false'); // user can join again
+                          window.location.reload();
+                        }}
+                        className="h-8 px-3.5 rounded-full bg-red-500 text-white text-xs font-bold"
+                      >
+                        Approve
+                      </button>
+                    </div>
+                  </div>
+                </SectionCard>
+              )}
 
               {/* Host applications — accept / reject inline */}
               {applications.length > 0 && (

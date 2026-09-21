@@ -30,6 +30,12 @@ export const GoLive = () => {
       return;
     }
 
+    // Check if Agency Quit Request is pending
+    if (localStorage.getItem('agencyQuitStatus') === 'pending') {
+      showToast('You cannot go live while your agency quit request is pending', 'error');
+      return;
+    }
+
     setLoading(true);
     try {
       // One user = one active live session. Check before creating a new one.

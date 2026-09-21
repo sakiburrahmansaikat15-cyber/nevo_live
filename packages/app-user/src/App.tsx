@@ -58,7 +58,9 @@ import {
   WatchHistory,
   GamesHub,
   LuckySpin,
+  MyAgency,
   ActivityCenter,
+  AgentProfileMock,
 } from './pages';
 import { PrivacyPolicy, Guidelines, Terms, AboutUs } from './pages/legal/LegalPage';
 
@@ -246,6 +248,10 @@ export default function App() {
               element={<ProtectedRoute><Income /></ProtectedRoute>}
             />
             <Route
+              path="/my-agency"
+              element={<ProtectedRoute><MyAgency /></ProtectedRoute>}
+            />
+            <Route
               path="/top-up"
               element={<ProtectedRoute><TopUp /></ProtectedRoute>}
             />
@@ -316,6 +322,10 @@ export default function App() {
             {/* #57 short video feed — full-bleed, own chrome */}
             <Route path="/videos" element={<ProtectedRoute><VideoFeed /></ProtectedRoute>} />
 
+            <Route
+              path="/user/59237509"
+              element={<ProtectedRoute><AgentProfileMock /></ProtectedRoute>}
+            />
             <Route
               path="/user/:id"
               element={<ProtectedRoute><PublicProfile /></ProtectedRoute>}
